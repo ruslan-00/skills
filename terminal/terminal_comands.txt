@@ -1,0 +1,39 @@
+clear							#Очистити консоль
+pwd						 	#Показати поточний каталог
+ls						 	#Показати файли в цій папці, крім прихованих
+ls -f						 	#Показати файли в цій папці, включаючи і приховані
+cd c:/							#Перейти в конкретний каталог
+cd -							#Повернутися назад
+cd .. 							#Вийти на 1 рівень вгору
+cd ../..						#Вийти на 2 рівня вгору
+mkdir 							#Створити папку
+cd! $ 							#Перейти в тільки що створену папку
+mkdir -p firstFolder twoFolder treeFolder		#Створити відразу кілька папок
+mkdir -p firstFolder/twoFolder/{treeFolder,fourFolder} 	#Створити відразу кілька вкладених папок
+touch index.html 					#Створити файл index.html
+touch {main.css,main.js,index.html}   			#Створити відразу кілька файлів, ніяких зайвих пропусків бути не повинно
+rm main.css 						#Видалити порожню папку main.css
+rm -r firstFolder/twoFolder/fourFolder 			#Видалити папку fourFolder з файлами всередині неї
+mv main.js firstFolder 					#Перемістити файл main.js з потоної папки в папку firstFolder
+	
+$ vim index.html	# Відкрити будь-який txt файл у Vim
+			#-відкрити файл index.html 
+			# змінити режим на Редагування тиснемо букву I(Insert) 
+			# редагувати
+			# для виходу з режиму редагування тиснемо ESC 
+			# для збереження тиснемо :w 
+			# для виходу :q
+	
+find . -name "main.js" 					#Знайти файл main.js
+grep Hello index.html 					#Знайти текст Hello у файлі index.html
+grep -A2 Hello index.html 				#Вивести два ряка до вказаного тексту
+grep -В2 Hello index.html 				#Вивести два ряка після вказаного тексту
+less index.html 					#Вивести вміст довгого файлу (команда less) вихід жмемо q.
+date							#Вивести в терміналі дату і час
+chmod ugo+x ./script_1.sh 				#Надати дозвіл запуску файлу
+./script_1.sh 						#Запустити скрипт
+curl -O https://api.quarantine.country/api/v1/regions 	#Відправити http запит на сервер та зберегти у файл
+
+
+
+
