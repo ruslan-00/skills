@@ -45,7 +45,8 @@
 					"script": {
 						"exec": [
 							"let jsonData = JSON.parse(responseBody);\r",
-							"postman.setEnvironmentVariable(\"token\", jsonData.token);"
+							"postman.setEnvironmentVariable(\"token\", jsonData.token);\r",
+							"console.log(request);"
 						],
 						"type": "text/javascript"
 					}
@@ -55,8 +56,8 @@
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "formdata",
-					"formdata": [
+					"mode": "urlencoded",
+					"urlencoded": [
 						{
 							"key": "login",
 							"value": "Ruslan",
@@ -76,18 +77,6 @@
 					],
 					"path": [
 						"login"
-					],
-					"query": [
-						{
-							"key": "login",
-							"value": "Ruslan",
-							"disabled": true
-						},
-						{
-							"key": "pasword",
-							"value": "qwerty",
-							"disabled": true
-						}
 					]
 				}
 			},
@@ -143,7 +132,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n\"age\":{{age}},\r\n\"salary\":3000,\r\n\"name\":\"{{name}}\",\r\n\"auth_token\":\"{{token}}\"\r\n}",
+					"raw": "{\r\n    \"age\": {{age}},\r\n    \"salary\": 3000,\r\n    \"name\": \"{{name}}\",\r\n    \"auth_token\": \"{{token}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -215,21 +204,25 @@
 						{
 							"key": "auth_token",
 							"value": "{{token}}",
+							"contentType": "application/json",
 							"type": "text"
 						},
 						{
 							"key": "age",
 							"value": "47",
+							"contentType": "application/json",
 							"type": "text"
 						},
 						{
 							"key": "salary",
 							"value": "3000",
+							"contentType": "application/json",
 							"type": "text"
 						},
 						{
 							"key": "name",
 							"value": "Ruslan",
+							"contentType": "application/json",
 							"type": "text"
 						}
 					]
@@ -406,25 +399,31 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"pm.test(\"json\", function () {\r",
-							"    pm.response.to.be.json;\r",
-							"});\r",
+							"\r",
 							"jsonData = pm.response.json();\r",
-							"let random = Math.floor(Math.random() * jsonData.length);\r",
-							"let ranId = jsonData[random].Cur_ID\r",
-							"//console.log(ranId)\r",
-							"postman.setEnvironmentVariable(\"Cur_ID\", ranId);\r",
-							"const curIDs = [];\r",
-							"for (let i=0; i<jsonData.length; i++){\r",
-							"    if (jsonData[i].Cur_ID > 0){\r",
-							"        curIDs.push(jsonData[i].Cur_ID)\r",
-							"      //console.log(jsonData[i].Cur_ID)  \r",
-							"    }\r",
-							"}\r",
-							"postman.setEnvironmentVariable(\"curIDs\", curIDs);"
+							"const token = pm.environment.get(\"token\");\r",
+							"\r",
+							"for (let i = 0; i < jsonData.length; i++) {\r",
+							"    let reque = {\r",
+							"        method: \"POST\",\r",
+							"        header: {'Content-Type': 'application/x-www-form-urlencoded'},\r",
+							"        url: \"http://116.203.27.46:5002/curr_byn\",\r",
+							"        body: {\r",
+							"                mode: 'urlencoded',\r",
+							"                urlencoded:\r",
+							"                [\r",
+							"                    {key: \"auth_token\", value: token, disabled: false},\r",
+							"                    {key: \"curr_code\", value: i, disabled: false}\r",
+							"                ]\r",
+							"            }\r",
+							"        };\r",
+							"\r",
+							"        pm.sendRequest(reque, function (error, response) {\r",
+							"            if (response.code === 200) {\r",
+							"                console.log(response.json());\r",
+							"            }\r",
+							"        });\r",
+							"}"
 						],
 						"type": "text/javascript"
 					}
@@ -480,13 +479,31 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"pm.test(\"json\", function () {\r",
-							"    pm.response.to.be.json;\r",
-							"});\r",
-							""
+							"\r",
+							"jsonData = pm.response.json();\r",
+							"const token = pm.environment.get(\"token\");\r",
+							"\r",
+							"for (let i = 0; i < jsonData.length; i++) {\r",
+							"    let reque = {\r",
+							"        method: \"POST\",\r",
+							"        header: {'Content-Type': 'application/x-www-form-urlencoded'},\r",
+							"        url: \"http://116.203.27.46:5002/curr_byn\",\r",
+							"        body: {\r",
+							"                mode: 'urlencoded',\r",
+							"                urlencoded:\r",
+							"                [\r",
+							"                    {key: \"auth_token\", value: token, disabled: false},\r",
+							"                    {key: \"curr_code\", value: i, disabled: false}\r",
+							"                ]\r",
+							"            }\r",
+							"        };\r",
+							"\r",
+							"        pm.sendRequest(reque, function (error, response) {\r",
+							"            if (response.code === 200) {\r",
+							"                console.log(response.json());\r",
+							"            }\r",
+							"        });\r",
+							"}"
 						],
 						"type": "text/javascript"
 					}
@@ -527,17 +544,87 @@
 					],
 					"options": {
 						"raw": {
-							"language": "text"
+							"language": "json"
 						}
 					}
 				},
 				"url": {
-					"raw": "{{url}}/curr_byn",
+					"raw": "http://116.203.27.46:5002/curr_byn",
+					"protocol": "http",
 					"host": [
-						"{{url}}"
+						"116",
+						"203",
+						"27",
+						"46"
 					],
+					"port": "5002",
 					"path": [
 						"curr_byn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let reque =     {\r",
+							"method: \"POST\",\r",
+							"header: {'Content-Type': 'application/x-www-form-urlencoded'},\r",
+							"url: \"http://116.203.27.46:5002/curr_byn\",\r",
+							"body: {\r",
+							"        mode: 'urlencoded',\r",
+							"        urlencoded:[\r",
+							"            {key: \"auth_token\", value: pm.environment.get(\"token\"), disabled: false},\r",
+							"            {key: \"curr_code\", value: 145, disabled: false}\r",
+							"            ]\r",
+							"    }\r",
+							"};\r",
+							"\r",
+							"pm.sendRequest(reque, function (err, response) {\r",
+							"    console.log(response.json());\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://116.203.27.46:5002/",
+					"protocol": "http",
+					"host": [
+						"116",
+						"203",
+						"27",
+						"46"
+					],
+					"port": "5002",
+					"path": [
+						""
 					]
 				}
 			},
