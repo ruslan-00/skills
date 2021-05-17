@@ -11,15 +11,10 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://116.203.27.46:5002/get_method?name=Ruslan&age=47",
-					"protocol": "http",
+					"raw": "{{url}}/get_method?name=Ruslan&age=47",
 					"host": [
-						"116",
-						"203",
-						"27",
-						"46"
+						"{{url}}"
 					],
-					"port": "5002",
 					"path": [
 						"get_method"
 					],
@@ -104,7 +99,7 @@
 							"let jsonData = pm.response.json();\r",
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
-							"}); \r",
+							"});\r",
 							"let schema ={\r",
 							"\"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
 							"  \"type\": \"object\",\r",
@@ -165,7 +160,7 @@
 							"    }  )\r",
 							"pm.test(\"Audit coefficient salary 12 monhts\", function (){\r",
 							"    pm.expect(jsonData.qa_salary_after_12_months).to.eql(jsonData.person.u_name[1]*2.9)\r",
-							"    console.log(jsonData.person.u_name[1])\r",
+							"\r",
 							"}  )\r",
 							"pm.test(\"Audit coefficient salary 1,5 year\", function (){\r",
 							"    pm.expect(jsonData.person.u_salary_1_5_year).to.eql(jsonData.person.u_name[1]*4)\r",
@@ -208,9 +203,7 @@
 					"script": {
 						"exec": [
 							"let jsonData = pm.response.json();\r",
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"}); \r",
+							" \r",
 							"pm.test(\"json\", function () {\r",
 							"    pm.response.to.be.json;\r",
 							"});\r",
@@ -320,9 +313,7 @@
 						"exec": [
 							"    let jsonData = pm.response.json();\r",
 							"    \r",
-							"    pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"}); \r",
+							" \r",
 							"let schema= {\r",
 							"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
 							"  \"type\": \"object\",\r",
@@ -411,9 +402,7 @@
 					"script": {
 						"exec": [
 							"let jsonData = JSON.parse(responseBody);\r",
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"}); \r",
+							" \r",
 							"let schema= {\r",
 							"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
 							"  \"type\": \"object\",\r",
@@ -537,9 +526,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
+							"\r",
 							"\r",
 							"jsonData = pm.response.json();\r",
 							"let random = Math.floor(Math.random() * jsonData.length);\r",
@@ -551,19 +538,17 @@
 							"\r",
 							"for (let i = 0; i < jsonData.length; i++) {\r",
 							"    let reque = {\r",
-							"        'method': \"POST\",\r",
+							"        /*method: \"POST\",\r",
 							"        'url': \"http://116.203.27.46:5002/curr_byn\",\r",
 							"        'header': {'Content-Type': 'application/form-data'},\r",
-							"         body: {\r",
+							"        'body': {\r",
 							"                'mode': 'formdata',\r",
 							"                'formdata':\r",
 							"                [\r",
 							"                    {key: \"auth_token\", value: pm.environment.get(\"token\"), disabled: false},\r",
 							"                    {key: \"curr_code\", value: i, disabled: false}\r",
-							"                ]\r",
-							"\r",
-							"\r",
-							"        /*method: \"POST\",\r",
+							"                ]*/\r",
+							"        method: \"POST\",\r",
 							"        header: {'Content-Type': 'application/x-www-form-urlencoded'},\r",
 							"        url: \"http://116.203.27.46:5002/curr_byn\",\r",
 							"        body: {\r",
@@ -572,7 +557,7 @@
 							"                [\r",
 							"                    {key: \"auth_token\", value: pm.environment.get(\"token\"), disabled: false},\r",
 							"                    {key: \"curr_code\", value: i, disabled: false}\r",
-							"                ]*/\r",
+							"                ]\r",
 							"            }\r",
 							"        };\r",
 							"        pm.sendRequest(reque, function (error, response) {\r",
@@ -698,12 +683,7 @@
 							"value": "145",
 							"type": "text"
 						}
-					],
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					]
 				},
 				"url": {
 					"raw": "http://116.203.27.46:5002/curr_byn",
@@ -721,71 +701,28 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		},
 		{
-			"name": "New Request",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"let reque =     {\r",
-							"method: \"POST\",\r",
-							"header: {'Content-Type': 'application/x-www-form-urlencoded'},\r",
-							"url: \"http://116.203.27.46:5002/curr_byn\",\r",
-							"body: {\r",
-							"        mode: 'urlencoded',\r",
-							"        urlencoded:[\r",
-							"            {key: \"auth_token\", value: pm.environment.get(\"token\"), disabled: false},\r",
-							"            {key: \"curr_code\", value: 145, disabled: false}\r",
-							"            ]\r",
-							"    }\r",
-							"};\r",
-							"\r",
-							"pm.sendRequest(reque, function (err, response) {\r",
-							"    console.log(response.json());\r",
-							"\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": []
-				},
-				"url": {
-					"raw": "http://116.203.27.46:5002/",
-					"protocol": "http",
-					"host": [
-						"116",
-						"203",
-						"27",
-						"46"
-					],
-					"port": "5002",
-					"path": [
-						""
-					]
-				}
-			},
-			"response": []
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});"
+				]
+			}
 		}
 	]
 }
