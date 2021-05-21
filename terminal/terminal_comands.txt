@@ -35,5 +35,5 @@ chmod ugo+x ./script_1.sh 				#Надати дозвіл запуску файл
 curl -O https://api.quarantine.country/api/v1/regions 	#Відправити http запит на сервер та зберегти у файл
 
 checkout -b sql						#створити нову гілку sql та з -b одразу перейти на неї 
-branch sql						#створити нову гілку sql
-
+branch sql							#створити нову гілку sql
+push -u origin sql 					#скопіювати гілку sql на віддалений репозитарій і відслідковувати зміни
