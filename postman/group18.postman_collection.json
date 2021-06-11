@@ -712,6 +712,29 @@
 			"item": [
 				{
 					"name": "age_usa",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"jsonData = pm.response.json();\r",
+									" console.log(jsonData.age)\r",
+									" if(jsonData.age >=0 && jsonData.age <=20 && jsonData.age_type == \"underage\"){ \r",
+									"          i=\"underage\"} \r",
+									"     else if (jsonData.age >=21 && jsonData.age <=49 && jsonData.age_type == \"adult\"){ i=\"adult\"}\r",
+									"      else if (jsonData.age >=50 && jsonData.age <=100 && jsonData.age_type == \"antiquity\"){  i=\"antiquity\"}\r",
+									"      else {  i=\"no\"}\r",
+									"\r",
+									"pm.test(\"Your test name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.age_type).to.eql(i);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -720,7 +743,7 @@
 							"formdata": [
 								{
 									"key": "age",
-									"value": "17",
+									"value": "10",
 									"type": "text"
 								}
 							]
@@ -739,6 +762,22 @@
 				},
 				{
 					"name": "age_europe",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"jsonData = pm.response.json();\r",
+									" console.log(jsonData.age)\r",
+									" if(jsonData.age >=0 && jsonData.age <=17 && jsonData.age_type == \"underage\"){ \r",
+									"          console.log('yes')} \r",
+									"     else { console.log('no')} ;\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -747,7 +786,7 @@
 							"formdata": [
 								{
 									"key": "age",
-									"value": "1",
+									"value": "17",
 									"type": "text"
 								}
 							]
@@ -798,6 +837,17 @@
 			"item": [
 				{
 					"name": "object_info_1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
