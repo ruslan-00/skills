@@ -768,10 +768,19 @@
 							"script": {
 								"exec": [
 									"jsonData = pm.response.json();\r",
-									" console.log(jsonData.age)\r",
+									"\r",
 									" if(jsonData.age >=0 && jsonData.age <=17 && jsonData.age_type == \"underage\"){ \r",
-									"          console.log('yes')} \r",
-									"     else { console.log('no')} ;\r",
+									"          i=\"underage\"} \r",
+									"     else if (jsonData.age >=18 && jsonData.age <=49 && jsonData.age_type == \"adult\"){ i=\"adult\"}\r",
+									"      else if (jsonData.age >=50 && jsonData.age <=100 && jsonData.age_type == \"antiquity\"){  i=\"antiquity\"}\r",
+									"      else {  i=\"no\"}\r",
+									"\r",
+									"pm.test(\"Age type\", function () {\r",
+									"    pm.expect(jsonData.age_type).to.eql(i);\r",
+									"});\r",
+									"pm.test(\"Age type\", function () {\r",
+									"    pm.expect(jsonData.content.length).to.eql(8);\r",
+									"});\r",
 									""
 								],
 								"type": "text/javascript"
@@ -786,7 +795,7 @@
 							"formdata": [
 								{
 									"key": "age",
-									"value": "17",
+									"value": "99",
 									"type": "text"
 								}
 							]
@@ -993,12 +1002,7 @@
 									"value": "Ruslan",
 									"type": "text"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{url}}/user_info_1",
@@ -1035,12 +1039,7 @@
 									"value": "Ruslan",
 									"type": "text"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{url}}/user_info_2",
@@ -1077,12 +1076,7 @@
 									"value": "Ruslan",
 									"type": "text"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{url}}/user_info_3",
@@ -1119,12 +1113,7 @@
 									"value": "Ruslan",
 									"type": "text"
 								}
-							],
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+							]
 						},
 						"url": {
 							"raw": "{{url}}/user_info_4",
